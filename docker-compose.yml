@@ -1,3 +1,12 @@
+symfonyuk-php:
+  extends:
+    file: ./docker/php/php.yml
+    service: php-fpm
+  volumes:
+    - ./:/symfony.org.uk
+  working_dir: /symfony.org.uk
+  hostname: symfony.org.uk
+  container_name: symfonyuk-php
 symfonyuk-slackin:
   image: chk1/slackin
   environment:
@@ -9,10 +18,12 @@ symfonyuk-slackin:
 symfonyuk-nginx:
   image: nginx:latest
   links:
+    - symfonyuk-php
     - symfonyuk-slackin
+  volumes_from:
+    - symfonyuk-php
   volumes:
     - ./docker/nginx/:/etc/nginx/conf.d/
-    - ./:/symfony.org.uk
   ports:
     - "80:80"
   container_name: symfonyuk-nginx
