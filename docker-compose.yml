@@ -1,0 +1,18 @@
+symfonyuk-slackin:
+  image: chk1/slackin
+  environment:
+    SLACK_TOKEN: ''
+    SLACK_ORG: symfony-uk
+  ports:
+    - "3000:3000"
+  container_name: symfonyuk-slackin
+symfonyuk-nginx:
+  image: nginx:latest
+  links:
+    - symfonyuk-slackin
+  volumes:
+    - ./docker/nginx/:/etc/nginx/conf.d/
+    - ./:/symfony.org.uk
+  ports:
+    - "80:80"
+  container_name: symfonyuk-nginx
