@@ -6,6 +6,9 @@ symfonyuk-slackin:
   ports:
     - "3000:3000"
   container_name: symfonyuk-slackin
+  log_opt:
+    max-size: "100k"
+    max-file: "50"
 symfonyuk-nginx:
   image: nginx:latest
   links:
@@ -16,3 +19,6 @@ symfonyuk-nginx:
   ports:
     - "80:80"
   container_name: symfonyuk-nginx
+  log_opt:
+    max-size: "100k"
+    max-file: "50"
