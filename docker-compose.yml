@@ -3,6 +3,7 @@ symfonyuk-slackin:
   environment:
     SLACK_TOKEN: ''
     SLACK_ORG: symfony-uk
+    SLACK_INTERVAL: "60000"
   ports:
     - "3000:3000"
   container_name: symfonyuk-slackin
