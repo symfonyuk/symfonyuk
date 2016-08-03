@@ -1,25 +1,29 @@
-symfonyuk-slackin:
-  image: chk1/slackin
-  environment:
-    SLACK_TOKEN: ''
-    SLACK_ORG: symfony-uk
-    SLACK_INTERVAL: "60000"
-  ports:
-    - "3000:3000"
-  container_name: symfonyuk-slackin
-  log_opt:
-    max-size: "100k"
-    max-file: "50"
-symfonyuk-nginx:
-  image: nginx:latest
-  links:
-    - symfonyuk-slackin
-  volumes:
-    - ./docker/nginx/:/etc/nginx/conf.d/
-    - ./:/symfony.org.uk
-  ports:
-    - "80:80"
-  container_name: symfonyuk-nginx
-  log_opt:
-    max-size: "100k"
-    max-file: "50"
+version: '2'
+
+services:
+  symfonyuk-slackin:
+    build:
+      context: ./docker/slackin
+    environment:
+      SLACK_TOKEN
+      SLACK_ORG
+      SLACK_INTERVAL: "60000"
+    ports:
+      - "3000:3000"
+    logging:
+      options:
+        max-size: "100k"
+        max-file: "50"
+  symfonyuk-nginx:
+    image: nginx:latest
+    links:
+      - symfonyuk-slackin
+    volumes:
+      - ./docker/nginx/:/etc/nginx/conf.d/
+      - ./:/symfony.org.uk
+    ports:
+      - "80:80"
+    logging:
+      options:
+        max-size: "100k"
+        max-file: "50"
